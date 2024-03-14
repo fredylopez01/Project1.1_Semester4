@@ -1,4 +1,4 @@
-package co.edu.uptc.list.exceptions;
+package co.edu.uptc.project11.exceptions;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

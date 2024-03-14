@@ -40,9 +40,9 @@ public class GroupDto {
         return groupDtos;
     }
 
-    public static SimpleUptcList<Group> fromGroupsDtos(SimpleUptcList<GroupDto> groupsDtos){
+    public static SimpleUptcList<Group> fromGroupsDto(SimpleUptcList<GroupDto> groupsDto){
         SimpleUptcList<Group> group = new SimpleUptcList<>();
-        for (GroupDto groupDto : groupsDtos) {
+        for (GroupDto groupDto : groupsDto) {
             group.add(fromGroupDto(groupDto));
         }
         return group;

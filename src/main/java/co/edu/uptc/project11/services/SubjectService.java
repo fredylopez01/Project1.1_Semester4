@@ -36,7 +36,7 @@ public class SubjectService {
         try {
             boolean isAdd = false;
             for (Subject subjecti : subjects) {
-                if(subjecti.getCode().equals(subject.getCode())){
+                if(subjecti.getCode().equalsIgnoreCase(subject.getCode())){
                     isAdd = true;
                 }
             }
@@ -54,6 +54,21 @@ public class SubjectService {
         for (int i = 0; i < subjects.size(); i++) {
             if(subjects.get(i).getCode().equalsIgnoreCase(code)){
                 subject = subjects.remove(i);
+                try {
+                    saveDates(subjects);
+                } catch (FileNotFoundException e) {
+                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+                }
+            }
+        }
+        return subject;
+    }
+
+    public Subject setSubject(SimpleUptcList<Subject> subjects, String code, Subject newSubject) throws ProjectException {
+        Subject subject = new Subject();
+        for (int i = 0; i < subjects.size(); i++) {
+            if(subjects.get(i).getCode().equalsIgnoreCase(code)){
+                subject = subjects.set(i, newSubject);
                 try {
                     saveDates(subjects);
                 } catch (FileNotFoundException e) {

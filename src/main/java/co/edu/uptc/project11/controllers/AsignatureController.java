@@ -1,13 +1,15 @@
 package co.edu.uptc.project11.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import co.edu.uptc.list.services.SimpleUptcList;
+import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.dtos.SubjectDto;
 import co.edu.uptc.project11.exceptions.ProjectException;
 import co.edu.uptc.project11.models.Subject;
@@ -39,4 +41,16 @@ public class AsignatureController {
             return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
         }
     }
+
+    @DeleteMapping("/deleteSubject/{code}")
+    public ResponseEntity<Object> deleteSubject(@PathVariable String code){
+        try{
+            SimpleUptcList<Subject> subjects = subjectService.getSubjects();
+            Subject deletedSubject= subjectService.deleteSubject(subjects, code);
+            return ResponseEntity.ok().body(SubjectDto.fromSubject(deletedSubject));
+        } catch (ProjectException e) {
+            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
+        }
+    }
+
 }

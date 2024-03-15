@@ -1,6 +1,6 @@
 package co.edu.uptc.project11.dtos;
 
-import co.edu.uptc.list.services.SimpleUptcList;
+import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.models.Place;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

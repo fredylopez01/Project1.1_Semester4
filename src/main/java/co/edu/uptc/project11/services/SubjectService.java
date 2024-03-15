@@ -3,7 +3,7 @@ package co.edu.uptc.project11.services;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import co.edu.uptc.list.services.SimpleUptcList;
+import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.exceptions.ProjectException;
 import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Subject;
@@ -47,6 +47,21 @@ public class SubjectService {
         } catch (FileNotFoundException e) {
             throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
         }
+    }
+
+    public Subject deleteSubject(SimpleUptcList<Subject> subjects, String code) throws ProjectException {
+        Subject subject = new Subject();
+        for (int i = 0; i < subjects.size(); i++) {
+            if(subjects.get(i).getCode().equalsIgnoreCase(code)){
+                subject = subjects.remove(i);
+                try {
+                    saveDates(subjects);
+                } catch (FileNotFoundException e) {
+                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+                }
+            }
+        }
+        return subject;
     }
 
     public SimpleUptcList<Subject> loadDates() throws IOException{

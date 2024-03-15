@@ -11,7 +11,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
-import co.edu.uptc.list.services.SimpleUptcList;
+import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.models.Group;
 import co.edu.uptc.project11.models.Place;
 import co.edu.uptc.project11.models.Subject;

@@ -1,6 +1,8 @@
 package co.edu.uptc.project11.dtos;
 
 import co.edu.uptc.list.services.SimpleUptcList;
+import co.edu.uptc.project11.exceptions.ProjectException;
+import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Subject;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,6 +22,13 @@ public class SubjectDto {
         subjectDto.setName(subject.getName());
         subjectDto.setCode(subject.getCode());
         return subjectDto;
+    }
+
+    public static void validateSubject(SubjectDto subjectDto) throws ProjectException {
+        if (subjectDto.getName() == null || 
+        subjectDto.getCode() == null) {
+            throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);
+        }
     }
 
     public static Subject fromSubjectDto(SubjectDto subjectDto){

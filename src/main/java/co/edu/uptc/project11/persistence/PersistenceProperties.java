@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public class PersistenceProperties {
     @Value("${RUTA_ARCHIVO_PROPERTIES}")
-    static String routeProperties = "src\\main\\resources\\static\\config.properties";
+    static String routeProperties = "config\\config.properties";
 
     public static String read(String property){
         Properties propertiesFile = new Properties();

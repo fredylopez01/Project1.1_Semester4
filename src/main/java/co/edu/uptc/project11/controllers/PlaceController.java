@@ -1,7 +1,9 @@
 package co.edu.uptc.project11.controllers;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +37,17 @@ public class PlaceController{
             SimpleUptcList<Place> places = placeService.getPlaces();
             placeService.addPlace(places, PlaceDto.fromPlaceDto(placeDto));
             return ResponseEntity.ok().body(placeDto);
+        } catch (ProjectException e) {
+            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
+        }
+    }
+
+    @DeleteMapping("/deletePlace/{identification}")
+    public ResponseEntity<Object> deleteSubject(@PathVariable String identification){
+        try{
+            SimpleUptcList<Place> places = placeService.getPlaces();
+            Place deletedPlace= placeService.deletePlace(places, identification);
+            return ResponseEntity.ok().body(PlaceDto.fromPlace(deletedPlace));
         } catch (ProjectException e) {
             return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
         }

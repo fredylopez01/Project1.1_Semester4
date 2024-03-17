@@ -47,6 +47,21 @@ public class PlaceService {
             throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
         }
     }
+
+    public Place deletePlace(SimpleUptcList<Place> places, String identification) throws ProjectException {
+        Place place = new Place();
+        for (int i = 0; i < places.size(); i++) {
+            if(places.get(i).getIdentification().equalsIgnoreCase(identification)){
+                place = places.remove(i);
+                try {
+                    saveDates(places);
+                } catch (FileNotFoundException e) {
+                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+                }
+            }
+        }
+        return place;
+    }
     
     public SimpleUptcList<Place> loadDates() throws IOException{
         return persistenceJSON.readDates("p");

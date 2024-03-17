@@ -1,6 +1,8 @@
 package co.edu.uptc.project11.dtos;
 
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
+import co.edu.uptc.project11.exceptions.ProjectException;
+import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Place;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,5 +48,13 @@ public class PlaceDto {
             places.add(fromPlaceDto(placeDto));
         }
         return places;
+    }
+
+    public static void validatePlace(PlaceDto placeDto) throws ProjectException {
+        if(placeDto.getIdentification() == null ||
+        placeDto.getName() == null ||
+        placeDto.getPhysicalLocation() == null){
+            throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);
+        }
     }
 }

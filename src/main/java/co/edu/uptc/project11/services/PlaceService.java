@@ -71,4 +71,19 @@ public class PlaceService {
         persistenceJSON.writeDates(subjects);
     }
 
+    public Place setPlace(SimpleUptcList<Place> places, String identification, Place newPlace) throws ProjectException {
+        Place place = new Place();
+        for (int i = 0; i < places.size(); i++) {
+            if(places.get(i).getIdentification().equalsIgnoreCase(identification)){
+                place = places.set(i, newPlace);
+                try {
+                    saveDates(places);
+                } catch (FileNotFoundException e) {
+                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+                }
+            }
+        }
+        return place;
+    }
+
 }

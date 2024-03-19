@@ -19,7 +19,11 @@ import co.edu.uptc.project11.services.PlaceService;
 @RestController
 @RequestMapping("/places")
 public class PlaceController{
-    PlaceService placeService = new PlaceService();
+    PlaceService placeService;
+
+    public PlaceController(){
+        placeService = new PlaceService();
+    }
 
     @GetMapping("/list")
     public ResponseEntity<Object> getPlaces(){

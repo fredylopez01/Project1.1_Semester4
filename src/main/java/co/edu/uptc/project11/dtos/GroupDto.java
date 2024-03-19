@@ -1,6 +1,8 @@
 package co.edu.uptc.project11.dtos;
 
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
+import co.edu.uptc.project11.exceptions.ProjectException;
+import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Group;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -46,5 +48,17 @@ public class GroupDto {
             group.add(fromGroupDto(groupDto));
         }
         return group;
+    }
+
+    public static void validateGroup(GroupDto groupDto) throws ProjectException {
+        if(groupDto.getIdentificationPlace() == null ||
+        groupDto.getSubjectCode() == null ||
+        groupDto.getSchedule() == null){
+            throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);
+        } else{
+            if(groupDto.getSchedule().length != 3){
+                throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);
+            }
+        }
     }
 }

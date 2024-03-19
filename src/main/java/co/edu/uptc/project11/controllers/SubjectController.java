@@ -19,7 +19,11 @@ import co.edu.uptc.project11.services.SubjectService;
 @RestController
 @RequestMapping("/subjects")
 public class SubjectController {
-    SubjectService subjectService = new SubjectService();
+    SubjectService subjectService;
+
+    public SubjectController(){
+        subjectService = new SubjectService();
+    }
     
     @GetMapping("/list")
     public ResponseEntity<Object> getAsignatures(){

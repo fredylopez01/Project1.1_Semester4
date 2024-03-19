@@ -35,12 +35,7 @@ public class PlaceService {
     
     public void addPlace(SimpleUptcList<Place> places, Place place) throws ProjectException {
         try {
-            boolean isAdd = false;
-            for (Place placei : places) {
-                if(placei.getIdentification().equalsIgnoreCase(place.getIdentification())){
-                    isAdd = true;
-                }
-            }
+            boolean isAdd = isExistPlace(places, place.getIdentification());
             if(!isAdd){
                 places.add(place);
                 saveDates(places);
@@ -64,15 +59,6 @@ public class PlaceService {
         }
         return place;
     }
-    
-    public SimpleUptcList<Place> loadDates() throws IOException{
-        TypeToken<SimpleUptcList<Place>> listTypeToken = new TypeToken<SimpleUptcList<Place>>() {};
-        return persistenceJSON.readDates(listTypeToken);
-    }
-
-    public void saveDates(SimpleUptcList<Place> subjects) throws FileNotFoundException{
-        persistenceJSON.writeDates(subjects);
-    }
 
     public Place setPlace(SimpleUptcList<Place> places, String identification, Place newPlace) throws ProjectException {
         Place place = new Place();
@@ -87,6 +73,25 @@ public class PlaceService {
             }
         }
         return place;
+    }
+
+    public static boolean isExistPlace(SimpleUptcList<Place> places, String identification) {
+        boolean isAdd = false;
+        for (Place placei : places) {
+            if(placei.getIdentification().equalsIgnoreCase(identification)){
+                isAdd = true;
+            }
+        }
+        return isAdd;
+    }
+    
+    public SimpleUptcList<Place> loadDates() throws IOException{
+        TypeToken<SimpleUptcList<Place>> listTypeToken = new TypeToken<SimpleUptcList<Place>>() {};
+        return persistenceJSON.readDates(listTypeToken);
+    }
+
+    public void saveDates(SimpleUptcList<Place> subjects) throws FileNotFoundException{
+        persistenceJSON.writeDates(subjects);
     }
 
 }

@@ -52,6 +52,22 @@ public class GroupService {
         }
     }
 
+    public Group deleteGroup(SimpleUptcList<Group> groups, String identificationPlace, String[] schedule) throws ProjectException {
+        Group deleteGroup = new Group();
+        for (int i = 0; i < groups.size(); i++) {
+            if(groups.get(i).getIdentificationPlace().equalsIgnoreCase(identificationPlace)
+                    && CompareArray.isEqualsSchedule(groups.get(i).getSchedule(), schedule)){
+                deleteGroup = groups.remove(i);
+                try {
+                    saveDates(groups);
+                } catch (FileNotFoundException e) {
+                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+                }
+            }
+        }
+        return deleteGroup;
+    }
+
     public SimpleUptcList<Group> loadDates() throws IOException{
         TypeToken<SimpleUptcList<Group>> listTypeToken = new TypeToken<SimpleUptcList<Group>>() {};
         return persistenceJSON.readDates(listTypeToken);
@@ -60,4 +76,5 @@ public class GroupService {
     public void saveDates(SimpleUptcList<Group> groups) throws FileNotFoundException{
         persistenceJSON.writeDates(groups);
     }
+
 }

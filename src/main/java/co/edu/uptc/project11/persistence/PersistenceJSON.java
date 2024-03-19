@@ -12,9 +12,6 @@ import com.google.gson.reflect.TypeToken;
 import com.google.gson.stream.JsonReader;
 
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
-import co.edu.uptc.project11.models.Group;
-import co.edu.uptc.project11.models.Place;
-import co.edu.uptc.project11.models.Subject;
 
 public class PersistenceJSON<T> {
 	private String route;
@@ -23,16 +20,10 @@ public class PersistenceJSON<T> {
 		this.route = route;
 	}
 	
-	public SimpleUptcList<T> readDates(String type) throws IOException {
+	public SimpleUptcList<T> readDates(TypeToken<SimpleUptcList<T>> typeToken) throws IOException {
 		JsonReader reader = new JsonReader(new FileReader(route));
 		Gson gson = new GsonBuilder().registerTypeAdapter(LocalDate.class, new LocalDateAdapter()).create();
-		SimpleUptcList<T> listaObjetos;
-		switch (type) {
-			case "s" -> listaObjetos = gson.fromJson(reader, new TypeToken<SimpleUptcList<Subject>>() {}.getType());
-			case "p" -> listaObjetos = gson.fromJson(reader, new TypeToken<SimpleUptcList<Place>>() {}.getType());
-			case "g" -> listaObjetos = gson.fromJson(reader, new TypeToken<SimpleUptcList<Group>>() {}.getType());  
-			default-> listaObjetos = gson.fromJson(reader, new TypeToken<SimpleUptcList<T>>() {}.getType());
-		}
+		SimpleUptcList<T> listaObjetos = gson.fromJson(reader, typeToken.getType());
 		reader.close();
 		return listaObjetos;
 	}

@@ -3,6 +3,8 @@ package co.edu.uptc.project11.services;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.google.gson.reflect.TypeToken;
+
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.exceptions.ProjectException;
 import co.edu.uptc.project11.exceptions.TypeMessageEnum;
@@ -34,12 +36,7 @@ public class SubjectService {
 
     public void addSubject(SimpleUptcList<Subject> subjects, Subject subject) throws ProjectException{
         try {
-            boolean isAdd = false;
-            for (Subject subjecti : subjects) {
-                if(subjecti.getCode().equalsIgnoreCase(subject.getCode())){
-                    isAdd = true;
-                }
-            }
+            boolean isAdd = isExistSubject(subjects, subject.getCode());
             if(!isAdd){
                 subjects.add(subject);
                 saveDates(subjects);
@@ -79,8 +76,19 @@ public class SubjectService {
         return subject;
     }
 
+    public static boolean isExistSubject(SimpleUptcList<Subject> subjects, String code){
+        boolean isExist = false;
+        for (Subject subject : subjects) {
+            if(subject.getCode().equalsIgnoreCase(code)){
+                isExist = true;
+            }
+        }
+        return isExist;
+    }
+
     public SimpleUptcList<Subject> loadDates() throws IOException{
-        return persistenceJSON.readDates("s");
+        TypeToken<SimpleUptcList<Subject>> listTypeToken = new TypeToken<SimpleUptcList<Subject>>() {};
+        return persistenceJSON.readDates(listTypeToken);
     }
 
     public void saveDates(SimpleUptcList<Subject> subjects) throws FileNotFoundException{

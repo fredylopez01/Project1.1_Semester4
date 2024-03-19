@@ -3,6 +3,8 @@ package co.edu.uptc.project11.services;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import com.google.gson.reflect.TypeToken;
+
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.exceptions.ProjectException;
 import co.edu.uptc.project11.exceptions.TypeMessageEnum;
@@ -64,7 +66,8 @@ public class PlaceService {
     }
     
     public SimpleUptcList<Place> loadDates() throws IOException{
-        return persistenceJSON.readDates("p");
+        TypeToken<SimpleUptcList<Place>> listTypeToken = new TypeToken<SimpleUptcList<Place>>() {};
+        return persistenceJSON.readDates(listTypeToken);
     }
 
     public void saveDates(SimpleUptcList<Place> subjects) throws FileNotFoundException{

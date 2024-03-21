@@ -11,7 +11,7 @@ import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Group;
 import co.edu.uptc.project11.persistence.PersistenceJSON;
 import co.edu.uptc.project11.persistence.PersistenceProperties;
-import co.edu.uptc.project11.utils.CompareArray;
+import co.edu.uptc.project11.utils.MyArrayUtils;
 
 public class GroupService {
     private PersistenceJSON<Group> persistenceJSON;
@@ -39,7 +39,7 @@ public class GroupService {
             boolean isAdd = false;
             for (Group groupi : groups) {
                 if(groupi.getIdentificationPlace().equalsIgnoreCase(group.getIdentificationPlace())
-                    && CompareArray.isEqualsSchedule(groupi.getSchedule(), group.getSchedule())){
+                    && MyArrayUtils.isEqualsSchedule(groupi.getSchedule(), group.getSchedule())){
                     isAdd = true;
                 }
             }
@@ -56,7 +56,7 @@ public class GroupService {
         Group deleteGroup = new Group();
         for (int i = 0; i < groups.size(); i++) {
             if(groups.get(i).getIdentificationPlace().equalsIgnoreCase(identificationPlace)
-                    && CompareArray.isEqualsSchedule(groups.get(i).getSchedule(), schedule)){
+                    && MyArrayUtils.isEqualsSchedule(groups.get(i).getSchedule(), schedule)){
                 deleteGroup = groups.remove(i);
                 try {
                     saveDates(groups);
@@ -66,6 +66,16 @@ public class GroupService {
             }
         }
         return deleteGroup;
+    }
+
+    public SimpleUptcList<String> getCodesSubjectPlace(SimpleUptcList<Group> groups,String identificationPlace) throws ProjectException{
+        SimpleUptcList<String> codesSubjectPlace = new SimpleUptcList<>();
+        for (Group group : groups) {
+            if(group.getIdentificationPlace().equalsIgnoreCase(identificationPlace)){
+                codesSubjectPlace.add(group.getSubjectCode());
+            }
+        }
+        return codesSubjectPlace;
     }
 
     public SimpleUptcList<Group> loadDates() throws IOException{

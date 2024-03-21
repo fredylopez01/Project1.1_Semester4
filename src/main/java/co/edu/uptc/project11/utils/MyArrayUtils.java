@@ -37,4 +37,14 @@ public class MyArrayUtils {
         }
         return newList;
     }
+
+    public static int countTimesRepeat(SimpleUptcList<String> items, String item){
+        int times = 0;
+        for (String itemFor : items) {
+            if(itemFor.equalsIgnoreCase(item)){
+                times++;
+            }
+        }
+        return times;
+    }
 }

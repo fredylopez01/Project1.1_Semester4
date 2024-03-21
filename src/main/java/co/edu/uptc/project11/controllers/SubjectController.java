@@ -77,9 +77,10 @@ public class SubjectController {
         try {
             SimpleUptcList<String> codes = getCodesSubjectPlace(identificationPlace);
             SimpleUptcList<Subject> subjects = new SimpleUptcList<>();
+            SimpleUptcList<Subject> subjectsBase = subjectService.getSubjects();
             Subject subject = new Subject();
             for (String code : codes) {
-                subject = subjectService.getSubjecByCode(subjectService.getSubjects(), code);
+                subject = subjectService.getSubjecByCode(subjectsBase, code);
                 subjects.add(subject);
             }
             SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(subjects);
@@ -92,6 +93,31 @@ public class SubjectController {
     private SimpleUptcList<String> getCodesSubjectPlace(String identificationPlace) throws ProjectException{
         GroupService groupService = new GroupService();
         SimpleUptcList<String> codes = groupService.getCodesSubjectPlace(groupService.getGroups(), identificationPlace);
+        codes = MyArrayUtils.removeElementsRepeat(codes);
+        return codes;
+    }
+
+    @GetMapping("/moreOneGroup")
+    public ResponseEntity<Object> getSubjectsMoreOneGroup(){
+        try {
+            SimpleUptcList<String> codes = getCodesSubjectMoreOneGroup();
+            SimpleUptcList<Subject> subjects = new SimpleUptcList<>();
+            SimpleUptcList<Subject> subjectsBase = subjectService.getSubjects();
+            Subject subject = new Subject();
+            for (String code : codes) {
+                subject = subjectService.getSubjecByCode(subjectsBase, code);
+                subjects.add(subject);
+            }
+            SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(subjects);
+            return ResponseEntity.ok().body(subjectsDto);
+        } catch (ProjectException e) {
+            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
+        }
+    }
+
+    private SimpleUptcList<String> getCodesSubjectMoreOneGroup() throws ProjectException{
+        GroupService groupService = new GroupService();
+        SimpleUptcList<String> codes = groupService.getCodesSubjectMoreOneGroup(groupService.getGroups());
         codes = MyArrayUtils.removeElementsRepeat(codes);
         return codes;
     }

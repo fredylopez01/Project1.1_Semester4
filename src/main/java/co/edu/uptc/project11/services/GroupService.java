@@ -78,6 +78,25 @@ public class GroupService {
         return codesSubjectPlace;
     }
 
+    public SimpleUptcList<String> getCodesSubjectMoreOneGroup(SimpleUptcList<Group> groups){
+        SimpleUptcList<String> codesSubjectMoreOneGroup = new SimpleUptcList<>();
+        SimpleUptcList<String> codes = codesSubjectGroup(groups);
+        for (Group group : groups) {
+            if(MyArrayUtils.countTimesRepeat(codes, group.getSubjectCode())>1){
+                codesSubjectMoreOneGroup.add(group.getSubjectCode());
+            }
+        }
+        return codesSubjectMoreOneGroup;
+    }
+
+    public SimpleUptcList<String> codesSubjectGroup(SimpleUptcList<Group> groups){
+        SimpleUptcList<String> codes = new SimpleUptcList<>();
+        for (Group group : groups) {
+            codes.add(group.getSubjectCode());
+        }
+        return codes;
+    }
+
     public SimpleUptcList<Group> loadDates() throws IOException{
         TypeToken<SimpleUptcList<Group>> listTypeToken = new TypeToken<SimpleUptcList<Group>>() {};
         return persistenceJSON.readDates(listTypeToken);

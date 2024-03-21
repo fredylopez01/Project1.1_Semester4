@@ -28,11 +28,21 @@ public class SubjectService {
                 subjectsAux.add(subject);
             }
             return subjectsAux;
-         } catch (IOException e) {
-             throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
-         }
- 
-     }
+        } catch (IOException e) {
+            throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+        }
+
+    }
+
+    public Subject getSubjecByCode(SimpleUptcList<Subject> subjects, String codeSubject){
+        Subject subjectReturned = new Subject();
+        for (Subject subject : subjects) {
+            if(subject.getCode().equalsIgnoreCase(codeSubject)){
+                subjectReturned = subject;
+            }
+        }
+        return subjectReturned;
+    }
 
     public void addSubject(SimpleUptcList<Subject> subjects, Subject subject) throws ProjectException{
         try {
@@ -76,7 +86,7 @@ public class SubjectService {
         return subject;
     }
 
-    public static boolean isExistSubject(SimpleUptcList<Subject> subjects, String code){
+    public boolean isExistSubject(SimpleUptcList<Subject> subjects, String code){
         boolean isExist = false;
         for (Subject subject : subjects) {
             if(subject.getCode().equalsIgnoreCase(code)){

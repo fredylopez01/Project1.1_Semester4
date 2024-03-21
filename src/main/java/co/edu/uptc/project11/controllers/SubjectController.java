@@ -14,7 +14,9 @@ import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
 import co.edu.uptc.project11.dtos.SubjectDto;
 import co.edu.uptc.project11.exceptions.ProjectException;
 import co.edu.uptc.project11.models.Subject;
+import co.edu.uptc.project11.services.GroupService;
 import co.edu.uptc.project11.services.SubjectService;
+import co.edu.uptc.project11.utils.MyArrayUtils;
 
 @RestController
 @RequestMapping("/subjects")
@@ -70,4 +72,27 @@ public class SubjectController {
         }
     }
 
+    @GetMapping("/samePlace/{identificationPlace}")
+    public ResponseEntity<Object> getSubjectsSamePlace(@PathVariable String identificationPlace){
+        try {
+            SimpleUptcList<String> codes = getCodesSubjectPlace(identificationPlace);
+            SimpleUptcList<Subject> subjects = new SimpleUptcList<>();
+            Subject subject = new Subject();
+            for (String code : codes) {
+                subject = subjectService.getSubjecByCode(subjectService.getSubjects(), code);
+                subjects.add(subject);
+            }
+            SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(subjects);
+            return ResponseEntity.ok().body(subjectsDto);
+        } catch (ProjectException e) {
+            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
+        }
+    }
+
+    private SimpleUptcList<String> getCodesSubjectPlace(String identificationPlace) throws ProjectException{
+        GroupService groupService = new GroupService();
+        SimpleUptcList<String> codes = groupService.getCodesSubjectPlace(groupService.getGroups(), identificationPlace);
+        codes = MyArrayUtils.removeElementsRepeat(codes);
+        return codes;
+    }
 }

@@ -47,4 +47,32 @@ public class MyArrayUtils {
         }
         return times;
     }
+
+    public static int countTimesRepeatSchedule(SimpleUptcList<String[]> schedules, String[] schedule) {
+       int times = 0;
+       for (String[] scheduleFor : schedules) {
+            if(isEqualsSchedule(scheduleFor, schedule)){
+                times++;
+            }
+       }
+       return times;
+    }
+
+    public static SimpleUptcList<String[]> removeScheduleRepeat(SimpleUptcList<String[]> list){
+        SimpleUptcList<String[]> newList = new SimpleUptcList<>();
+        boolean isAdd = false;
+        newList.add(list.get(0));
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < newList.size(); j++) {
+                if(isEqualsSchedule(list.get(i),newList.get(j))){
+                    isAdd = true;
+                }
+            }
+            if(!isAdd){
+                newList.add(list.get(i));
+            }
+            isAdd = false;
+        }
+        return newList;
+    }
 }

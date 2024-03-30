@@ -121,4 +121,29 @@ public class SubjectController {
         codes = MyArrayUtils.removeElementsRepeat(codes);
         return codes;
     }
+
+    @GetMapping("/sameSchedule")
+    public ResponseEntity<Object> getSubjectsSameSchedule(){
+        try {
+            SimpleUptcList<String> codes = getCodesSubjectSameSchedule();
+            SimpleUptcList<Subject> subjects = new SimpleUptcList<>();
+            SimpleUptcList<Subject> subjectsBase = subjectService.getSubjects();
+            Subject subject = new Subject();
+            for (String code : codes) {
+                subject = subjectService.getSubjecByCode(subjectsBase, code);
+                subjects.add(subject);
+            }
+            SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(subjects);
+            return ResponseEntity.ok().body(subjectsDto);
+        } catch (ProjectException e) {
+            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
+        }
+    }
+
+    private SimpleUptcList<String> getCodesSubjectSameSchedule() throws ProjectException{
+        GroupService groupService = new GroupService();
+        SimpleUptcList<String> codes = groupService.getCodesSubjectSameSchedule(groupService.getGroups());
+        codes = MyArrayUtils.removeElementsRepeat(codes);
+        return codes;
+    }
 }

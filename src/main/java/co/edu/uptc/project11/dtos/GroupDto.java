@@ -14,12 +14,14 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GroupDto {
+    private int number;
     private String subjectCode;
     private String identificationPlace;
     private String[] schedule;
 
     public static GroupDto fromGroup(Group group){
         GroupDto groupDto = new GroupDto();
+        groupDto.setNumber(group.getNumber());
         groupDto.setSubjectCode(group.getSubjectCode());
         groupDto.setIdentificationPlace(group.getIdentificationPlace());
         groupDto.setSchedule(group.getSchedule());
@@ -28,6 +30,7 @@ public class GroupDto {
 
     public static Group fromGroupDto(GroupDto groupDto){
         Group group = new Group();
+        group.setNumber(groupDto.getNumber());
         group.setSubjectCode(groupDto.getSubjectCode());
         group.setIdentificationPlace(groupDto.getIdentificationPlace());
         group.setSchedule(groupDto.getSchedule());
@@ -51,7 +54,8 @@ public class GroupDto {
     }
 
     public static void validateGroup(GroupDto groupDto) throws ProjectException {
-        if(groupDto.getIdentificationPlace() == null ||
+        if( groupDto.getNumber() == 0 ||
+        groupDto.getIdentificationPlace() == null ||
         groupDto.getSubjectCode() == null ||
         groupDto.getSchedule() == null){
             throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);

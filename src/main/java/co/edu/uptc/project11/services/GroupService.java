@@ -39,8 +39,10 @@ public class GroupService {
             boolean isAdd = false;
             for (Group groupi : groups) {
                 if(groupi.getIdentificationPlace().equalsIgnoreCase(group.getIdentificationPlace())
-                    && MyArrayUtils.isEqualsSchedule(groupi.getSchedule(), group.getSchedule())){
-                    isAdd = true;
+                    && MyArrayUtils.isEqualsSchedule(groupi.getSchedule(), group.getSchedule()) 
+                    && groupi.getNumber() == group.getNumber() 
+                    && groupi.getSubjectCode().equalsIgnoreCase(group.getSubjectCode())){
+                        isAdd = true;
                 }
             }
             if(!isAdd){
@@ -66,6 +68,21 @@ public class GroupService {
             }
         }
         return deleteGroup;
+    }
+
+    public Group setGroup(SimpleUptcList<Group> groups, int number, String subjectCode, Group newGroup) throws ProjectException {
+        Group group = new Group();
+        for (int i = 0; i < groups.size(); i++) {
+            if(groups.get(i).getNumber() == number && groups.get(i).getSubjectCode().equalsIgnoreCase(subjectCode)){
+                group = groups.set(i, newGroup);
+                try {
+                    saveDates(groups);
+                } catch (FileNotFoundException e) {
+                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+                }
+            }
+        }
+        return group;
     }
 
     public SimpleUptcList<String> getCodesSubjectPlace(SimpleUptcList<Group> groups,String identificationPlace) throws ProjectException{

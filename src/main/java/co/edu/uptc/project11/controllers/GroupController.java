@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -52,7 +53,7 @@ public class GroupController {
     private void verifyNewGroup(GroupDto groupDto) throws ProjectException{
         GroupDto.validateGroup(groupDto);
         SubjectService subjectService = new SubjectService();
-        boolean isExistSubject = SubjectService.isExistSubject(subjectService.getSubjects(), groupDto.getSubjectCode());
+        boolean isExistSubject = subjectService.isExistSubject(subjectService.getSubjects(), groupDto.getSubjectCode());
         PlaceService placeService = new PlaceService();
         boolean isExistPlace = PlaceService.isExistPlace(placeService.getPlaces(), groupDto.getIdentificationPlace());
         if (!isExistSubject && !isExistPlace) {
@@ -66,6 +67,18 @@ public class GroupController {
             SimpleUptcList<Group> groups = groupService.getGroups();
             Group deleteGroup = groupService.deleteGroup(groups, identificationPlace, schedule);
             return ResponseEntity.ok().body(GroupDto.fromGroup(deleteGroup));
+        } catch (ProjectException e) {
+            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
+        }
+    }
+
+    @PutMapping("/setGroup/{numberGroup}/{subjectCode}")
+    public ResponseEntity<Object> setGroup(@RequestBody GroupDto groupDto, @PathVariable int numberGroup, @PathVariable String subjectCode){
+        try{
+            verifyNewGroup(groupDto);
+            SimpleUptcList<Group> groups = groupService.getGroups();
+            Group group = groupService.setGroup(groups, numberGroup, subjectCode , GroupDto.fromGroupDto(groupDto));
+            return ResponseEntity.ok().body(GroupDto.fromGroup(group));
         } catch (ProjectException e) {
             return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
         }

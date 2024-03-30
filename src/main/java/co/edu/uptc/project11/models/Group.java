@@ -10,6 +10,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Group {
+    private int number;
     private String subjectCode;
     private String identificationPlace;
     private String[] schedule;

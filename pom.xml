@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>co.edu.uptc</groupId>
 	<artifactId>project1.1</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>V_1.0.0</version>
 	<name>project1.1</name>
 	<description>Basic project of back-end of classes with asignature, place and group</description>
 	<properties>
@@ -43,11 +43,9 @@
 			<version>2.3.0</version>
 		</dependency>
 		<dependency>
-			<groupId>co.edu.uptc.list.services</groupId>
-			<artifactId>list-sinSpring</artifactId>
+			<groupId>co.edu.uptc.SimpleUptcList.services</groupId>
+			<artifactId>list</artifactId>
 			<version>1.0</version>
-			<scope>system</scope>
-			<systemPath>${basedir}/lib/libreriaSimpleUptcList.jar</systemPath>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>

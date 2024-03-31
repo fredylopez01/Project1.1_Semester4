@@ -123,9 +123,9 @@ public class SubjectController {
     }
 
     @GetMapping("/sameSchedule")
-    public ResponseEntity<Object> getSubjectsSameSchedule(){
+    public ResponseEntity<Object> getSubjectsSameSchedule(@RequestBody String[] schedule){
         try {
-            SimpleUptcList<String> codes = getCodesSubjectSameSchedule();
+            SimpleUptcList<String> codes = getCodesSubjectSameSchedule(schedule);
             SimpleUptcList<Subject> subjects = new SimpleUptcList<>();
             SimpleUptcList<Subject> subjectsBase = subjectService.getSubjects();
             Subject subject = new Subject();
@@ -140,10 +140,9 @@ public class SubjectController {
         }
     }
 
-    private SimpleUptcList<String> getCodesSubjectSameSchedule() throws ProjectException{
+    private SimpleUptcList<String> getCodesSubjectSameSchedule(String[] schedule) throws ProjectException{
         GroupService groupService = new GroupService();
-        SimpleUptcList<String> codes = groupService.getCodesSubjectSameSchedule(groupService.getGroups());
-        codes = MyArrayUtils.removeElementsRepeat(codes);
+        SimpleUptcList<String> codes = groupService.getCodesSubjectSameSchedule(groupService.getGroups(), schedule);
         return codes;
     }
 }

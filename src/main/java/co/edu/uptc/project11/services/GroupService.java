@@ -114,23 +114,14 @@ public class GroupService {
         return codes;
     }
 
-    public SimpleUptcList<String> getCodesSubjectSameSchedule(SimpleUptcList<Group> groups) {
+    public SimpleUptcList<String> getCodesSubjectSameSchedule(SimpleUptcList<Group> groups, String[] schedule) {
         SimpleUptcList<String> codesSubjectSameSchedule = new SimpleUptcList<>();
-        SimpleUptcList<String[]> schedules = schedulesSubject(groups);
         for (Group group : groups) {
-            if(MyArrayUtils.countTimesRepeatSchedule(schedules, group.getSchedule())>1){
+            if(MyArrayUtils.isEqualsSchedule(group.getSchedule(), schedule)){
                 codesSubjectSameSchedule.add(group.getSubjectCode());
             }
         }
         return codesSubjectSameSchedule;
-    }
-
-    public SimpleUptcList<String[]> schedulesSubject(SimpleUptcList<Group> groups){
-        SimpleUptcList<String[]> schedules = new SimpleUptcList<>();
-        for (Group group : groups) {
-            schedules.add(group.getSchedule());
-        }
-        return schedules;
     }
 
     public SimpleUptcList<Group> loadDates() throws IOException{

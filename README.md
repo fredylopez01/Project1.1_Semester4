@@ -10,14 +10,11 @@ Este es un mini-proyecto para aprender y reforzar los conocimientos en spring-bo
 
 ![](https://img.shields.io/badge/Postman-gray?style=for-the-badge&logo=postman&logoColor=orange)
 
-#### Lenguaje y Frameworks
+### Lenguaje y Frameworks
 
 ![](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=openjdk&logoColor=white)
 
 ![](https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white)
-
-
-
 
 
 ## Documentation
@@ -30,12 +27,11 @@ http://localhost:9081/doc/swagger-ui/index.html
 
 [Documentation](http://localhost:9081/doc/swagger-ui/index.html)
 
-
 ## API Reference
 
 ### El proyecto usa el puerto 9081
 
-## Controller-Subjects
+- ### CONTROLLER-SUBJECTS
 
 ```http
   http://localhost:9081/subjects
@@ -101,7 +97,17 @@ Retorna la asignatura que fue modificada, mejor dicho la que había antes.
 
 Retorna las asignaturas que tienen o están en más de un grupo.
 
-## Controller-Places
+#### Listar asignaturas que tienen un mismo horario
+
+```http
+  GET /subjects/sameSchedule
+```
+
+| Parameter | Type     | Description                       |
+| :-------- | :------- | :-------------------------------- |
+| `schedule`      | `String[]` | `@RequestBody` **Required**. Horario que debe tener las asignaturas que serán listadas |
+
+- ### CONTROLLER-PLACES
 
 ```http
   http://localhost:9081/places
@@ -149,7 +155,7 @@ Retorna el lugar que fue eliminado.
 
 Retorna el lugar que fue modificado.
 
-## Controller-Groups
+- ### Controller-Groups
 
 ```http
   http://localhost:9081/groups

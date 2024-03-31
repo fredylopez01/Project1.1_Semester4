@@ -143,6 +143,7 @@ public class SubjectController {
     private SimpleUptcList<String> getCodesSubjectSameSchedule(String[] schedule) throws ProjectException{
         GroupService groupService = new GroupService();
         SimpleUptcList<String> codes = groupService.getCodesSubjectSameSchedule(groupService.getGroups(), schedule);
+        codes = MyArrayUtils.removeElementsRepeat(codes);
         return codes;
     }
 }

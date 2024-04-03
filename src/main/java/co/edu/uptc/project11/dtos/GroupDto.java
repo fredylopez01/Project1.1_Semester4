@@ -60,7 +60,7 @@ public class GroupDto {
         groupDto.getSchedule() == null){
             throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);
         } else{
-            if(groupDto.getSchedule().length != 3){
+            if(groupDto.getSchedule().length > 3){
                 throw new ProjectException(TypeMessageEnum.INCOMPLETE_INFORMATION);
             }
         }

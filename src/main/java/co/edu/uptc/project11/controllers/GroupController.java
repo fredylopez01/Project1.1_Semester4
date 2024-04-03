@@ -52,7 +52,7 @@ public class GroupController {
         boolean isExistSubject = subjectService.isExistSubject(subjectService.getSubjects(), groupDto.getSubjectCode());
         PlaceService placeService = new PlaceService();
         boolean isExistPlace = PlaceService.isExistPlace(placeService.getPlaces(), groupDto.getIdentificationPlace());
-        if (!isExistSubject && !isExistPlace) {
+        if (!isExistSubject || !isExistPlace) {
             throw new ProjectException(TypeMessageEnum.NOT_FOUND);
         }
     }

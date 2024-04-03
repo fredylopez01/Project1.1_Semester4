@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>co.edu.uptc</groupId>
 	<artifactId>project1.1</artifactId>
-	<version>V_1.0.0</version>
+	<version>V_1.0.1</version>
 	<name>project1.1</name>
 	<description>Basic project of back-end of classes with asignature, place and group</description>
 	<properties>

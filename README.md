@@ -16,6 +16,14 @@ Este es un mini-proyecto para aprender y reforzar los conocimientos en spring-bo
 
 ![](https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=Spring&logoColor=white)
 
+## Uso
+
+Dentro del proyecto hay una carpeta llamada: ```proyectoEjecutable```, que contiene el .jar del proyecto el cual se llama: **```project1.1-V_1.0.0.jar```**, y para poder utilizar este jar o mejor dicho ejecutarlo, sólo se debe abrir la consola de comandos dentro de esta carpeta y escribir: 
+```
+java –jar project1.1-V_1.0.0.jar
+``` 
+y el jar empezara a ejecutarse, hay que tener en cuenta que dentro de esta carpeta (donde se aloja el archivo jar, existen 2 carpetas: una llamada ```config```, que tiene un archivo llamado **```config.properties```** que a su vez contiene las rutas de los archivos que se utilizan para que los datos persistan, si al ejecutar el jar, se presenta un error porque no se encontraron las rutas de los archivos, entonces se pueden arreglar desde este archivo. La otra carpeta se llama: ```dates```, que contiene tres archivos con extensión json (**```groups.json```**, **```places.json```** y **```subjects.json```**); que son los que almacenan los datos para que el proyecto pueda funcionar correctamente. 
+Es obligatorio que esta carpeta, tenga siempre esta misma estructura para que el jar se ejecute correctamente.
 
 ## Documentation
 

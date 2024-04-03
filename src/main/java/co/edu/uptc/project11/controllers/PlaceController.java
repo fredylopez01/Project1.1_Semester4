@@ -27,12 +27,8 @@ public class PlaceController{
 
     @GetMapping("/list")
     public ResponseEntity<Object> getPlaces(){
-        try {
-            SimpleUptcList<PlaceDto> subjectsDto = PlaceDto.fromPlaces(placeService.getPlaces());
-            return ResponseEntity.ok().body(subjectsDto);
-        } catch (ProjectException e) {
-            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
-        }
+        SimpleUptcList<PlaceDto> subjectsDto = PlaceDto.fromPlaces(placeService.getPlaces());
+        return ResponseEntity.ok().body(subjectsDto);
     }
 
     @PostMapping("/addPlace")
@@ -49,13 +45,9 @@ public class PlaceController{
 
     @DeleteMapping("/deletePlace/{identification}")
     public ResponseEntity<Object> deleteSubject(@PathVariable String identification){
-        try{
-            SimpleUptcList<Place> places = placeService.getPlaces();
-            Place deletedPlace= placeService.deletePlace(places, identification);
-            return ResponseEntity.ok().body(PlaceDto.fromPlace(deletedPlace));
-        } catch (ProjectException e) {
-            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
-        }
+        SimpleUptcList<Place> places = placeService.getPlaces();
+        Place deletedPlace= placeService.deletePlace(places, identification);
+        return ResponseEntity.ok().body(PlaceDto.fromPlace(deletedPlace));
     }
 
     @PutMapping("/setPlace/{identification}")

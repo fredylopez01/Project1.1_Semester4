@@ -1,37 +1,18 @@
 package co.edu.uptc.project11.services;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import com.google.gson.reflect.TypeToken;
-
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
-import co.edu.uptc.project11.exceptions.ProjectException;
-import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Subject;
-import co.edu.uptc.project11.persistence.PersistenceJSON;
-import co.edu.uptc.project11.persistence.PersistenceProperties;
+import co.edu.uptc.project11.utils.DataListsUtils;
 
 public class SubjectService {
-    private PersistenceJSON<Subject> persistenceJSON;
 
-    public SubjectService(){
-        String route = PersistenceProperties.read("routeSubjects");
-        persistenceJSON = new PersistenceJSON<>(route);
-    }
-
-    public SimpleUptcList<Subject> getSubjects() throws ProjectException {
-        try {
-            SimpleUptcList<Subject> subjects = loadDates();
-            SimpleUptcList<Subject> subjectsAux = new SimpleUptcList<>();
-            for (Subject subject : subjects) {
-                subjectsAux.add(subject);
-            }
-            return subjectsAux;
-        } catch (IOException e) {
-            throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+    public SimpleUptcList<Subject> getSubjects() {
+        SimpleUptcList<Subject> subjects = loadDates();
+        SimpleUptcList<Subject> subjectsAux = new SimpleUptcList<>();
+        for (Subject subject : subjects) {
+            subjectsAux.add(subject);
         }
-
+        return subjectsAux;
     }
 
     public Subject getSubjecByCode(SimpleUptcList<Subject> subjects, String codeSubject){
@@ -44,43 +25,31 @@ public class SubjectService {
         return subjectReturned;
     }
 
-    public void addSubject(SimpleUptcList<Subject> subjects, Subject subject) throws ProjectException{
-        try {
-            boolean isAdd = isExistSubject(subjects, subject.getCode());
-            if(!isAdd){
-                subjects.add(subject);
-                saveDates(subjects);
-            }
-        } catch (FileNotFoundException e) {
-            throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+    public void addSubject(SimpleUptcList<Subject> subjects, Subject subject) {
+        boolean isAdd = isExistSubject(subjects, subject.getCode());
+        if(!isAdd){
+            subjects.add(subject);
+            saveDates(subjects);
         }
     }
 
-    public Subject deleteSubject(SimpleUptcList<Subject> subjects, String code) throws ProjectException {
+    public Subject deleteSubject(SimpleUptcList<Subject> subjects, String code) {
         Subject subject = new Subject();
         for (int i = 0; i < subjects.size(); i++) {
             if(subjects.get(i).getCode().equalsIgnoreCase(code)){
                 subject = subjects.remove(i);
-                try {
-                    saveDates(subjects);
-                } catch (FileNotFoundException e) {
-                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
-                }
+                saveDates(subjects);
             }
         }
         return subject;
     }
 
-    public Subject setSubject(SimpleUptcList<Subject> subjects, String code, Subject newSubject) throws ProjectException {
+    public Subject setSubject(SimpleUptcList<Subject> subjects, String code, Subject newSubject) {
         Subject subject = new Subject();
         for (int i = 0; i < subjects.size(); i++) {
             if(subjects.get(i).getCode().equalsIgnoreCase(code)){
                 subject = subjects.set(i, newSubject);
-                try {
-                    saveDates(subjects);
-                } catch (FileNotFoundException e) {
-                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
-                }
+                saveDates(subjects);
             }
         }
         return subject;
@@ -96,13 +65,12 @@ public class SubjectService {
         return isExist;
     }
 
-    public SimpleUptcList<Subject> loadDates() throws IOException{
-        TypeToken<SimpleUptcList<Subject>> listTypeToken = new TypeToken<SimpleUptcList<Subject>>() {};
-        return persistenceJSON.readDates(listTypeToken);
+    public SimpleUptcList<Subject> loadDates() {
+        return DataListsUtils.subjects;
     }
 
-    public void saveDates(SimpleUptcList<Subject> subjects) throws FileNotFoundException{
-        persistenceJSON.writeDates(subjects);
+    public void saveDates(SimpleUptcList<Subject> subjects) {
+        DataListsUtils.subjects = subjects;
     }
 
 }

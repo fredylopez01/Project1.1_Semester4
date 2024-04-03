@@ -30,12 +30,8 @@ public class GroupController {
 
     @GetMapping("/list")
     public ResponseEntity<Object> getGroups(){
-        try {
-            SimpleUptcList<GroupDto> groupsDto = GroupDto.fromGroups(groupService.getGroups());
-            return ResponseEntity.ok().body(groupsDto);
-        } catch (ProjectException e) {
-            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
-        }
+        SimpleUptcList<GroupDto> groupsDto = GroupDto.fromGroups(groupService.getGroups());
+        return ResponseEntity.ok().body(groupsDto);
     }
 
     @PostMapping("/addGroup")
@@ -63,13 +59,9 @@ public class GroupController {
 
     @DeleteMapping("/deleteGroup/{identificationPlace}")
     public ResponseEntity<Object> deleteGroup(@PathVariable String identificationPlace, @RequestBody String[] schedule){
-        try{
-            SimpleUptcList<Group> groups = groupService.getGroups();
-            Group deleteGroup = groupService.deleteGroup(groups, identificationPlace, schedule);
-            return ResponseEntity.ok().body(GroupDto.fromGroup(deleteGroup));
-        } catch (ProjectException e) {
-            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
-        }
+        SimpleUptcList<Group> groups = groupService.getGroups();
+        Group deleteGroup = groupService.deleteGroup(groups, identificationPlace, schedule);
+        return ResponseEntity.ok().body(GroupDto.fromGroup(deleteGroup));
     }
 
     @PutMapping("/setGroup/{numberGroup}/{subjectCode}")

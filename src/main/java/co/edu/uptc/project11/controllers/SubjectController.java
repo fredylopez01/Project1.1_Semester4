@@ -29,12 +29,8 @@ public class SubjectController {
     
     @GetMapping("/list")
     public ResponseEntity<Object> getAsignatures(){
-        try {
-            SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(subjectService.getSubjects());
-            return ResponseEntity.ok().body(subjectsDto);
-        } catch (ProjectException e) {
-            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
-        }
+        SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(subjectService.getSubjects());
+        return ResponseEntity.ok().body(subjectsDto);
     }
 
     @PostMapping("/addSubject")
@@ -51,13 +47,9 @@ public class SubjectController {
 
     @DeleteMapping("/deleteSubject/{code}")
     public ResponseEntity<Object> deleteSubject(@PathVariable String code){
-        try{
-            SimpleUptcList<Subject> subjects = subjectService.getSubjects();
-            Subject deletedSubject= subjectService.deleteSubject(subjects, code);
-            return ResponseEntity.ok().body(SubjectDto.fromSubject(deletedSubject));
-        } catch (ProjectException e) {
-            return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
-        }
+        SimpleUptcList<Subject> subjects = subjectService.getSubjects();
+        Subject deletedSubject= subjectService.deleteSubject(subjects, code);
+        return ResponseEntity.ok().body(SubjectDto.fromSubject(deletedSubject));
     }
 
     @PutMapping("/setSubject/{code}")

@@ -1,75 +1,45 @@
 package co.edu.uptc.project11.services;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
-import com.google.gson.reflect.TypeToken;
-
 import co.edu.uptc.SimpleUptcList.services.SimpleUptcList;
-import co.edu.uptc.project11.exceptions.ProjectException;
-import co.edu.uptc.project11.exceptions.TypeMessageEnum;
 import co.edu.uptc.project11.models.Place;
-import co.edu.uptc.project11.persistence.PersistenceJSON;
-import co.edu.uptc.project11.persistence.PersistenceProperties;
+import co.edu.uptc.project11.utils.DataListsUtils;
 
 public class PlaceService {
-	private PersistenceJSON<Place> persistenceJSON;
 
-    public PlaceService(){
-        String route = PersistenceProperties.read("routePlaces");
-        persistenceJSON = new PersistenceJSON<>(route);
-    }
-
-    public SimpleUptcList<Place> getPlaces() throws ProjectException {
-        try {
-            SimpleUptcList<Place> places = loadDates();
-            SimpleUptcList<Place> placesAux = new SimpleUptcList<>();
-            for (Place place : places) {
-                placesAux.add(place);
-            }
-            return placesAux;
-        } catch (IOException e) {
-            throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+    public SimpleUptcList<Place> getPlaces() {
+        SimpleUptcList<Place> places = loadDates();
+        SimpleUptcList<Place> placesAux = new SimpleUptcList<>();
+        for (Place place : places) {
+            placesAux.add(place);
         }
+        return placesAux;
     }
     
-    public void addPlace(SimpleUptcList<Place> places, Place place) throws ProjectException {
-        try {
-            boolean isAdd = isExistPlace(places, place.getIdentification());
-            if(!isAdd){
-                places.add(place);
-                saveDates(places);
-            }
-        } catch (FileNotFoundException e) {
-            throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
+    public void addPlace(SimpleUptcList<Place> places, Place place) {
+        boolean isAdd = isExistPlace(places, place.getIdentification());
+        if(!isAdd){
+            places.add(place);
+            saveDates(places);
         }
     }
 
-    public Place deletePlace(SimpleUptcList<Place> places, String identification) throws ProjectException {
+    public Place deletePlace(SimpleUptcList<Place> places, String identification) {
         Place place = new Place();
         for (int i = 0; i < places.size(); i++) {
             if(places.get(i).getIdentification().equalsIgnoreCase(identification)){
                 place = places.remove(i);
-                try {
-                    saveDates(places);
-                } catch (FileNotFoundException e) {
-                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
-                }
+                saveDates(places);
             }
         }
         return place;
     }
 
-    public Place setPlace(SimpleUptcList<Place> places, String identification, Place newPlace) throws ProjectException {
+    public Place setPlace(SimpleUptcList<Place> places, String identification, Place newPlace) {
         Place place = new Place();
         for (int i = 0; i < places.size(); i++) {
             if(places.get(i).getIdentification().equalsIgnoreCase(identification)){
                 place = places.set(i, newPlace);
-                try {
-                    saveDates(places);
-                } catch (FileNotFoundException e) {
-                    throw new ProjectException(TypeMessageEnum.FILE_NOT_FOUND);
-                }
+                saveDates(places);
             }
         }
         return place;
@@ -85,13 +55,12 @@ public class PlaceService {
         return isAdd;
     }
     
-    public SimpleUptcList<Place> loadDates() throws IOException{
-        TypeToken<SimpleUptcList<Place>> listTypeToken = new TypeToken<SimpleUptcList<Place>>() {};
-        return persistenceJSON.readDates(listTypeToken);
+    public SimpleUptcList<Place> loadDates() {
+        return DataListsUtils.places;
     }
 
-    public void saveDates(SimpleUptcList<Place> subjects) throws FileNotFoundException{
-        persistenceJSON.writeDates(subjects);
+    public void saveDates(SimpleUptcList<Place> places) {
+        DataListsUtils.places = places;
     }
 
 }

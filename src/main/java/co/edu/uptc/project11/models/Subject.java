@@ -12,4 +12,8 @@ import lombok.Setter;
 public class Subject {
     private String name;
     private String code;
+    @Override
+    public String toString() {
+        return name + code;
+    }
 }

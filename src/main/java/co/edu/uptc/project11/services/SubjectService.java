@@ -6,6 +6,30 @@ import co.edu.uptc.project11.utils.DataListsUtils;
 
 public class SubjectService {
 
+    public SubjectService(){
+        Subject s1 = new Subject("matemáticas", "M1");
+        Subject s2 = new Subject("socio humanistisca", "SH1");
+        Subject s3 = new Subject("quimica", "Q1");
+        Subject s4 = new Subject("sociales", "S1");
+        Subject s5 = new Subject("programación", "P1");
+        Subject s6 = new Subject("naturales", "NA1");
+        Subject s7 = new Subject("musica", "MUS1");
+        Subject s8 = new Subject("humanidades", "HUM1");
+        Subject s9 = new Subject("algmoritmos", "A1");
+        Subject s10 = new Subject("sofware", "SOF1");
+
+        addSubject(getSubjects(), s1);
+        addSubject(getSubjects(), s2);
+        addSubject(getSubjects(), s3);
+        addSubject(getSubjects(), s4);
+        addSubject(getSubjects(), s5);
+        addSubject(getSubjects(), s6);
+        addSubject(getSubjects(), s7);
+        addSubject(getSubjects(), s8);
+        addSubject(getSubjects(), s9);
+        addSubject(getSubjects(), s10);
+    }
+
     public SimpleUptcList<Subject> getSubjects() {
         SimpleUptcList<Subject> subjects = loadDates();
         SimpleUptcList<Subject> subjectsAux = new SimpleUptcList<>();
@@ -64,7 +88,7 @@ public class SubjectService {
         }
         return isExist;
     }
-
+    
     public SimpleUptcList<Subject> loadDates() {
         return DataListsUtils.subjects;
     }

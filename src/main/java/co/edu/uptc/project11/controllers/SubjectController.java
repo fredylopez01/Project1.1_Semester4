@@ -138,4 +138,23 @@ public class SubjectController {
         codes = MyArrayUtils.removeElementsRepeat(codes);
         return codes;
     }
+
+    @GetMapping("/{partNameAsignature}")
+    public ResponseEntity<Object> search(@PathVariable String partNameAsignature){
+        SimpleUptcList<Subject> subjects = subjectService.getSubjects();
+        SimpleUptcList<Subject> i = subjects.search(partNameAsignature);
+        SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(i);
+        return ResponseEntity.ok().body(subjectsDto);
+    }
+
+    @GetMapping("/st/{partNameAsignature}")
+    public ResponseEntity<Object> test(@PathVariable String partNameAsignature){
+        SimpleUptcList<Subject> subjects = subjectService.getSubjects();
+        // SimpleUptcList<Subject> i = subjects.searchMethod(partNameAsignature, "getName");
+        SimpleUptcList<Subject> j = (SimpleUptcList<Subject>) subjects.searchAtrribute("name", partNameAsignature);
+        // SimpleUptcList<Subject> k = (SimpleUptcList<Subject>) subjects.getObjectsByStringAttribute1("name", partNameAsignature);
+        SimpleUptcList<SubjectDto> subjectsDto = SubjectDto.fromSubjects(j);
+        return ResponseEntity.ok().body(subjectsDto);
+    }
+
 }

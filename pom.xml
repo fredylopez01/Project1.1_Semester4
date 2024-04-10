@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>co.edu.uptc</groupId>
-	<artifactId>project1.1</artifactId>
+	<artifactId>project1.1Parcial</artifactId>
 	<version>V_1.0.1</version>
 	<name>project1.1</name>
 	<description>Basic project of back-end of classes with asignature, place and group</description>
@@ -45,7 +45,7 @@
 		<dependency>
 			<groupId>co.edu.uptc.SimpleUptcList.services</groupId>
 			<artifactId>list</artifactId>
-			<version>1.0</version>
+			<version>1.1</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/com.google.code.gson/gson -->
 		<dependency>

@@ -6,6 +6,30 @@ import co.edu.uptc.project11.utils.DataListsUtils;
 
 public class PlaceService {
 
+    public PlaceService(){
+        Place p1 = new Place("C124", "Salón C124", "Edificio Central");
+        Place p2 = new Place("R203", "Salón R203", "Edificio Rafeal Azula");
+        Place p3 = new Place("A103", "Salón A103", "Edificio Aulas");
+        Place p4 = new Place("D102", "Salón D102", "Edificio Central");
+        Place p5 = new Place("Coliseo", "Coliseo Deportivo", "Coliseo Central");
+        Place p6 = new Place("LN 203", "Laboratorio LN203", "Edificio Laboratorios Nuevos");
+        Place p7 = new Place("C303", "Salón C303", "Edificio Central");
+        Place p8 = new Place("AD1", "Auditorio 1", "Edificio Administrativo");
+        Place p9 = new Place("RA203", "Salón RA204", "Edificio RA");
+        Place p10 = new Place("Segundo Piso", "cafeteria", "Restaurante");
+
+        addPlace(getPlaces(), p1);
+        addPlace(getPlaces(), p2);
+        addPlace(getPlaces(), p3);
+        addPlace(getPlaces(), p4);
+        addPlace(getPlaces(), p5);
+        addPlace(getPlaces(), p6);
+        addPlace(getPlaces(), p7);
+        addPlace(getPlaces(), p8);
+        addPlace(getPlaces(), p9);
+        addPlace(getPlaces(), p10);
+    }
+
     public SimpleUptcList<Place> getPlaces() {
         SimpleUptcList<Place> places = loadDates();
         SimpleUptcList<Place> placesAux = new SimpleUptcList<>();

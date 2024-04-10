@@ -61,5 +61,13 @@ public class PlaceController{
             return ResponseEntity.status(e.getMessageException().getHttpStatus()).body(e.getMessageException());
         }
     }
+
+    @DeleteMapping("/deletePlaceByName/{namePlace}")
+    public ResponseEntity<Object> deleteGroup(@PathVariable String namePlace){
+        SimpleUptcList<Place> places = placeService.getPlaces();
+        int deleteItems = places.deleteByAttributeValue("name", namePlace);
+        placeService.saveDates(places);
+        return ResponseEntity.ok().body(deleteItems);
+    }
     
 }

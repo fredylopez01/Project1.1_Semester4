@@ -12,6 +12,24 @@
   - Windows 11 o superior
   - Linux-Sin Probar
 
+## **Instalación de la Libreria**
+
+1. Abrir la terminal de comandos. 
+2. Ahora debera copiar la siguiente linea, remplazando la *ruta* por la ruta donde esta el jar de la libreria en su computador. Todo debe estar en una única linea.
+
+```
+mvn install:install-file -Dfile=ruta -DartifactId=list -DgroupId="co.edu.uptc.SimpleUptcList.services" -Dversion="1.0" -Dpackaging=jar
+```
+Después de esto ya se reconocera la libreria; en el archivo pom.xml la importación de la libreria se debe de ver de la siguiente forma:
+
+```
+  <dependency>
+			<groupId>co.edu.uptc.SimpleUptcList.services</groupId>
+			<artifactId>list</artifactId>
+			<version>1.0</version>
+	</dependency>
+```
+
 ## **Instalación**
 
 - Crear una carpeta en el lugar de preferencia
@@ -25,6 +43,15 @@ java –jar project1.1-V_1.0.0.jar
 y el jar empezara a ejecutarse sin ningún problema.
 
 ## **Usos de endpoint:**
+
+### ``End point para eliminar los lugares con el mismo nombre o un fragmento de este``
+
+```
+DELETE http://localhost:9081/places/deletePlaceByName/{namePlace}
+```
+- El *namePlace* es el nombre o fragmento del lugar que quiere eliminar
+- Retorna la cantidad de lugares que coincidian y fueron eliminaron
+
 ### Documentation
 
 La documentación del proyecto fue hecha con la ayuda de **swagger** por lo tanto esta se puede ver al correr el proyecto y escribir en el navegador:

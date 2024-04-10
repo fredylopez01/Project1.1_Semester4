@@ -53,4 +53,12 @@ public class SubjectDto {
         }
         return subjects;
     }
+
+    public static SimpleUptcList<String> fromSubject(SimpleUptcList<Subject> subjects){
+        SimpleUptcList<String> names = new SimpleUptcList<>();
+        for (Subject subject : subjects) {
+            names.add(subject.getName());
+        }
+        return names;
+    } 
 }
